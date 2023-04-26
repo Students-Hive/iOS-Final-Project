@@ -42,12 +42,18 @@ Student Hive is a housing app that simplifies the search process for students se
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
-   * [list associated required story here]
-   * ...
-* [list second screen here]
-   * [list associated required story here]
-   * ...
+* Login Screen
+   * User can login 
+
+* Sign up Screen
+   * User can sign up
+* Home Page
+   * User can view detail page of housing
+* Add Information Page
+   * User can input their room information for renting it out
+* Map Screen
+   * User can view the pinned location of housing
+   
 
 ### 3. Navigation
 
