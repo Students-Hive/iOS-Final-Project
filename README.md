@@ -42,7 +42,6 @@ Student Hive is a housing app that simplifies the search process for students se
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
 * Login Screen
    * User can login 
 
