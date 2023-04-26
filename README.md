@@ -89,10 +89,71 @@ Student Hive is a housing app that simplifies the search process for students se
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### User
+| Column | Type | Description |
+| ------ | ---- | ----------- |
+| objectId | String | Unique identifier for the user (default field) |
+| username | String | User's username (default field) |
+| password | String | User's password (default field) |
+| email | String | User's email address |
+| firstName | String | User's first name |
+| lastName | String | User's last name |
+| phoneNumber | String | User's phone number |
+| profilePicture | File | User's profile picture |
+| createdAt | DateTime | Date when the user was created (default field) |
+| updatedAt | DateTime | Date when the user was last updated (default field) |
+
+
+#### Listings
+| Column | Type | Description |
+| ------ | ---- | ----------- |
+| objectId | String | Unique identifier for the listing (default field) |
+| title | String | Title of the listing |
+| description | String | Description of the listing |
+| price | Number | Price of the listing |
+| location | String | Location of the listing |
+| images | Array | Array of images associated with the listing |
+| createdBy | Pointer to User | User who created the listing |
+| createdAt | DateTime | Date when the listing was created (default field) |
+| updatedAt | DateTime | Date when the listing was last updated (default field) |
+
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+#### User Login
+PFUser.logInWithUsername(inBackground:username, password:password) { (user, error) in
+  if user != nil {
+    // User logged in successfully
+  } else {
+    // Error logging in user
+  }
+}
+
+
+#### Fetch Listings
+let query = PFQuery(className:"Listing")
+query.findObjectsInBackground { (listings, error) in
+  if error == nil {
+    // Listings fetched successfully
+  } else {
+    // Error fetching listings
+  }
+}
+
+
+#### Create Listing
+let listing = PFObject(className:"Listing")
+listing["title"] = title
+listing["description"] = description
+listing["price"] = price
+listing["location"] = location
+listing["images"] = images
+listing["createdBy"] = PFUser.current()
+listing.saveInBackground { (success, error) in
+  if success {
+    // Listing saved successfully
+  } else {
+    // Error saving listing
+  }
+}
+
