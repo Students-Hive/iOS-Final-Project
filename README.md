@@ -103,10 +103,8 @@ Student Hive is a housing app that simplifies the search process for students se
 | username | String | User's username (default field) |
 | password | String | User's password (default field) |
 | email | String | User's email address |
-| firstName | String | User's first name |
-| lastName | String | User's last name |
-| phoneNumber | String | User's phone number |
-| profilePicture | File | User's profile picture |
+| studentID | String | User's student ID |
+| name | String | User's  name |
 | createdAt | DateTime | Date when the user was created (default field) |
 | updatedAt | DateTime | Date when the user was last updated (default field) |
 
@@ -115,51 +113,87 @@ Student Hive is a housing app that simplifies the search process for students se
 | Column | Type | Description |
 | ------ | ---- | ----------- |
 | objectId | String | Unique identifier for the listing (default field) |
-| title | String | Title of the listing |
-| description | String | Description of the listing |
-| price | Number | Price of the listing |
+| Name | String | Nameof the listing |
+| About | String | Description of the listing |
+| user | Number | user in charge of the listing |
 | location | String | Location of the listing |
 | images | Array | Array of images associated with the listing |
-| createdBy | Pointer to User | User who created the listing |
 | createdAt | DateTime | Date when the listing was created (default field) |
 | updatedAt | DateTime | Date when the listing was last updated (default field) |
 
 
 ### Networking
 #### User Login
-PFUser.logInWithUsername(inBackground:username, password:password) { (user, error) in
-  if user != nil {
-    // User logged in successfully
-  } else {
-    // Error logging in user
-  }
-}
+
+User.login(username: username, password: password) { [weak self] result in
+            switch result {
+            case .success(let user):
+                print("✅ Successfully logged in as user: \(user)")
+                NotificationCenter.default.post(name: Notification.Name("login"), object: nil)
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextVC = storyBoard.instantiateViewController(withIdentifier: "UITabBarController") as! UITabBarController
+                self?.navigationController?.pushViewController(nextVC, animated: true)
+                self?.navigationItem.hidesBackButton = true 
+            case .failure(let error):
+                self?.showAlert(description: error.localizedDescription)
+            }
+        }
 
 
 #### Fetch Listings
-let query = PFQuery(className:"Listing")
-query.findObjectsInBackground { (listings, error) in
-  if error == nil {
-    // Listings fetched successfully
-  } else {
-    // Error fetching listings
-  }
-}
+
+private func queryApartments(){
+        let query = ApartmentsList.query()
+        query.find { [weak self] result in
+            switch result {
+            case . success(let apartmentsList):
+                self?.apartmentsList = apartmentsList
+                print(self?.apartmentsList)
+                for apartment in self!.apartmentsList{
+                    print("aap", apartment)
+                }
+            case .failure(let error):
+                print("Error while loading the data, ",error)
+            }
+        }
+    }
 
 
 #### Create Listing
-let listing = PFObject(className:"Listing")
-listing["title"] = title
-listing["description"] = description
-listing["price"] = price
-listing["location"] = location
-listing["images"] = images
-listing["createdBy"] = PFUser.current()
-listing.saveInBackground { (success, error) in
-  if success {
-    // Listing saved successfully
-  } else {
-    // Error saving listing
-  }
+let imageFile1 = ParseFile(name: "image.jpg", data: imageData1)
+let imageFile2 = ParseFile(name: "image.jpg", data: imageData2)
+let imageFile3 = ParseFile(name: "image.jpg", data: imageData3)
+let imageFile4 = ParseFile(name: "image.jpg", data: imageData4)
+                
+guard let aptName = apartmentName.text,
+      let aptLocation = apartmentLocation.text,
+      let aptType = apartmentType.text,
+      let aptPrice = apartmentPrice.text,
+      let aptDes = apartmentDescription.text,
+      !aptName.isEmpty,
+      !aptLocation.isEmpty,
+      !aptType.isEmpty,
+      !aptPrice.isEmpty,
+      !aptDes.isEmpty else{
+    return
 }
+
+  var post = ApartmentsList()
+  post.userUploadPhoto = [imageFile1,imageFile2,imageFile3,imageFile4]
+  post.Name = aptName
+  post.Location = aptLocation
+  post.RoomType = aptType
+  post.Rent = aptPrice
+  post.About = aptDes
+  post.user = User.current?.username
+  post.save { [weak self] result in
+      DispatchQueue.main.async {
+          switch result {
+          case .success(let post):
+              print("✅ Post Saved! \(post)")
+          case .failure(let error):
+              print("error", error)
+          }
+      }
+  }
 
