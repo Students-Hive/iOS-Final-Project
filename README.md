@@ -93,7 +93,7 @@ Pictures of  hand sketched wireframes
 <img src="./draw1.jpeg" title='draw 1' width='500' alt='wireframe' /> <img src="./draw2.jpeg" title='draw 1' width='500' alt='wireframe' />
 <img src="./draw3.jpeg" title='draw 1' width='500' alt='wireframe' />
 
-### [BONUS] Digital Wireframes & Mockups
+###  Digital Wireframes
 
 <img src="./Login.png" title='draw 1' width='400' alt='wireframe' /> <img src="./Signup.png" title='draw 1' width='400' alt='wireframe' />
 <img src="./Home.png" title='draw 1' width='400' alt='wireframe' /> <img src="./Map.png" title='draw 1' width='400' alt='wireframe' />
