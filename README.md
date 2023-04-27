@@ -87,8 +87,8 @@ Student Hive is a housing app that simplifies the search process for students se
 
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+Pictures of  hand sketched wireframes
+<img src="./draw1.heic" title='draw 1' width='' alt='wireframe' />
 
 ### [BONUS] Digital Wireframes & Mockups
 
