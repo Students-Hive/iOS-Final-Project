@@ -204,3 +204,9 @@ guard let aptName = apartmentName.text,
       }
   }
 
+
+## Video Walkthrough
+
+Here's a walkthrough of implemented user stories:
+
+<img src='./0QcuFkA6.GIF' title='Video Walkthrough' width='' alt='Video Walkthrough' />
